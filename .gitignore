@@ -61,7 +61,7 @@ nbdist/
 .vscode/
 
 # Mac files
-
+.DS_Store
 .AppleDouble
 .LSOverride
 ._*
