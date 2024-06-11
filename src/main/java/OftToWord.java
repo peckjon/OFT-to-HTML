@@ -1,3 +1,4 @@
+import com.aspose.email.License;
 import com.aspose.email.MailMessage;
 import com.aspose.email.SaveOptions;
 import com.aspose.words.Document;
@@ -7,8 +8,24 @@ import java.io.FilenameFilter;
 
 public class OftToWord {
     public static void main(String[] args) {
+
+        // Set the license for Aspose.Email
+        try {
+            new License().setLicense("Aspose.EmailforJava.lic");
+        } catch (Exception e) {
+            System.err.println("Failed to load Aspose.Email license: " + e.getMessage());
+        }
+
+        // Set the license for Aspose.Words
+        try {
+            new License().setLicense("Aspose.WordsforJava.lic");
+        } catch (Exception e) {
+            System.err.println("Failed to load Aspose.Email license: " + e.getMessage());
+        }
+
         // Directory containing OFT files
         File inputDir = new File("input");
+
         // Output directory for DOCX files
         File outputDir = new File("output");
         if (!outputDir.exists()) {
@@ -28,7 +45,8 @@ public class OftToWord {
                     MailMessage message = MailMessage.load(oftFile.getAbsolutePath());
                     
                     // Temporary HTML output file path
-                    String htmlOutputPath = "HtmlOutput.html";
+                    String htmlOutputPath = outputDir.getAbsolutePath() + File.separator + oftFile.getName().replace(".oft", ".html");
+
                     // Save OFT as HTML
                     message.save(htmlOutputPath, SaveOptions.getDefaultHtml());
                     
@@ -37,11 +55,11 @@ public class OftToWord {
                     
                     // Construct output DOCX file path
                     String outputFilePath = outputDir.getAbsolutePath() + File.separator + oftFile.getName().replace(".oft", ".docx");
+                    
                     // Save the document in DOCX format
                     document.save(outputFilePath, SaveFormat.DOCX);
                     System.out.println("Converted: " + oftFile.getName() + " to " + outputFilePath);
-                    //delete the temporary HTML file
-                    new File(htmlOutputPath).delete(); // Delete the temporary HTML file
+
                 } catch (Exception e) {
                     System.err.println("An error occurred during conversion of " + oftFile.getName() + ": " + e.getMessage());
                 }

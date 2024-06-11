@@ -33,7 +33,6 @@ To run the project and convert OFT files to Word documents, use the following co
 ```shell
 gradle run
 ```
-
 This command processes all `.oft` files located in the `input` directory and saves the converted `.docx` files in the `output` directory.
 
 ### Input and Output Directories
@@ -41,3 +40,11 @@ This command processes all `.oft` files located in the `input` directory and sav
 - **Input Directory**: Place your `.oft` files in the `input` directory at the root of the project. The application scans this directory for `.oft` files to convert.
 
 - **Output Directory**: The converted `.docx` files are saved in the `output` directory, also located at the project's root. If the `output` directory does not exist, the application will attempt to create it.
+
+### Watermark
+
+The generated files will contain a watermark from Aspose, the company which provides the file format tools. It can be removed by obtaining a license for "Aspose.Email for Java".
+
+They provide free temporary licenses at https://purchase.aspose.com/temporary-license/
+
+To use your license, simply add the file "Aspose.EmailforJava.lic" to the root folder of this project before running it.

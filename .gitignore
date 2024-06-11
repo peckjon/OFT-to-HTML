@@ -76,3 +76,6 @@ nbdist/
 # Input and Output directories
 input/
 output/
+
+# license files
+*.lic
