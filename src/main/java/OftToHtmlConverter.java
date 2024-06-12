@@ -4,7 +4,7 @@ import com.aspose.email.SaveOptions;
 import java.io.File;
 import java.io.FilenameFilter;
 
-public class OftToWord {
+public class OftToHtmlConverter {
     public static void main(String[] args) {
 
         // Set the license for Aspose.Email
@@ -20,7 +20,6 @@ public class OftToWord {
         // Output directory for HTML files
         File outputDir = new File("output");
         if (!outputDir.exists()) {
-            // Create output directory if it doesn't exist
             outputDir.mkdirs();
         }
 
@@ -42,7 +41,7 @@ public class OftToWord {
                 }
             }
         } else {
-            System.err.println("No OFT files found in the input directory.");
+            System.err.println("No OFT files found in the 'input' directory.");
         }
     }
 }
