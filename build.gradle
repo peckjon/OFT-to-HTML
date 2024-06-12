@@ -7,18 +7,13 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://repository.aspose.com/repo/'
-    }
+    maven { url 'https://repository.aspose.com/repo/' }
+    // Add the Plutext repository
+    maven { url 'https://www.plutext.com/maven/' }
 }
 
 dependencies {
-    // Aspose.Email for Java with updated version and classifier
     implementation group: 'com.aspose', name: 'aspose-email', version: '24.5', classifier: 'jdk16'
-    // Aspose.Words for Java with updated version and classifier
-    implementation group: 'com.aspose', name: 'aspose-words', version: '24.5', classifier: 'jdk16'
-    // Test libraries
-    testImplementation 'junit:junit:4.13.2'
 }
 
 test {
