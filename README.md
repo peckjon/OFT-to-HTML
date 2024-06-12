@@ -1,6 +1,6 @@
 # OFT to Word Converter
 
-The project is a Java application designed to convert Outlook Template (OFT) files into Word (DOCX) format.
+The project is a Java application designed to convert Outlook Template (OFT) files into Word (DOCX) format. It also creates intermediate HTML files.
 
 ## Prerequisites
 

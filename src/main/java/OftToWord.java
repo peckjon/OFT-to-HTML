@@ -16,50 +16,27 @@ public class OftToWord {
             System.err.println("Failed to load Aspose.Email license: " + e.getMessage());
         }
 
-        // Set the license for Aspose.Words
-        try {
-            new License().setLicense("Aspose.WordsforJava.lic");
-        } catch (Exception e) {
-            System.err.println("Failed to load Aspose.Email license: " + e.getMessage());
-        }
-
         // Directory containing OFT files
         File inputDir = new File("input");
 
-        // Output directory for DOCX files
+        // Output directory for HTML DOCX files
         File outputDir = new File("output");
         if (!outputDir.exists()) {
-            outputDir.mkdirs(); // Create output directory if it doesn't exist
+            // Create output directory if it doesn't exist
+            outputDir.mkdirs();
         }
 
-        // Filter to identify OFT files
-        FilenameFilter oftFilter = (dir, name) -> name.toLowerCase().endsWith(".oft");
-
         // List all OFT files in the input directory
+        FilenameFilter oftFilter = (dir, name) -> name.toLowerCase().endsWith(".oft");
         File[] oftFiles = inputDir.listFiles(oftFilter);
 
+        // Convert OFT files to HTML and Word DOCX
         if (oftFiles != null) {
             for (File oftFile : oftFiles) {
                 try {
-                    // Load the OFT file
-                    MailMessage message = MailMessage.load(oftFile.getAbsolutePath());
-                    
-                    // Temporary HTML output file path
-                    String htmlOutputPath = outputDir.getAbsolutePath() + File.separator + oftFile.getName().replace(".oft", ".html");
-
-                    // Save OFT as HTML
-                    message.save(htmlOutputPath, SaveOptions.getDefaultHtml());
-                    
-                    // Load the HTML file with an instance of Document
-                    Document document = new Document(htmlOutputPath);
-                    
-                    // Construct output DOCX file path
-                    String outputFilePath = outputDir.getAbsolutePath() + File.separator + oftFile.getName().replace(".oft", ".docx");
-                    
-                    // Save the document in DOCX format
-                    document.save(outputFilePath, SaveFormat.DOCX);
-                    System.out.println("Converted: " + oftFile.getName() + " to " + outputFilePath);
-
+                    String htmlOutputPath = oftToHtml(outputDir, oftFile);
+                    String wordFilePath = htmltoWord(outputDir, oftFile, htmlOutputPath);
+                    System.out.println("Converted: " + oftFile.getName() + " to " + wordFilePath);
                 } catch (Exception e) {
                     System.err.println("An error occurred during conversion of " + oftFile.getName() + ": " + e.getMessage());
                 }
@@ -68,4 +45,21 @@ public class OftToWord {
             System.err.println("No OFT files found in the input directory.");
         }
     }
+
+    // Convert OFT file to HTML
+    private static String oftToHtml(File outputDir, File oftFile) {
+        MailMessage message = MailMessage.load(oftFile.getAbsolutePath());
+        String htmlOutputPath = outputDir.getAbsolutePath() + File.separator + oftFile.getName().replace(".oft", ".html");
+        message.save(htmlOutputPath, SaveOptions.getDefaultHtml());
+        return htmlOutputPath;
+    }
+
+    // Convert HTML file to Word
+    private static String htmltoWord(File outputDir, File oftFile, String htmlOutputPath) throws Exception {
+        Document document = new Document(htmlOutputPath);
+        String outputFilePath = outputDir.getAbsolutePath() + File.separator + oftFile.getName().replace(".oft", ".docx");
+        document.save(outputFilePath, SaveFormat.DOCX);
+        return outputFilePath;
+    }
+
 }
